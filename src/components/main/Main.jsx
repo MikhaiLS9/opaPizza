@@ -5,10 +5,7 @@ import { Container } from "../../styles/Container";
 export const Main = () => {
   return (
     <Container>
-    <div>
       <MainSectionStyled pizzas={pizzaData} />
-      
-    </div>
     </Container>
   );
 };

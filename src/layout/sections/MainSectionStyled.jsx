@@ -57,7 +57,9 @@ export const MainSectionStyled = (props) => {
           </StyledPizzaSelection>
           <StyledPriceBlock>
             <p>от {pizza.price} &#8381;</p>
-            <AddPizzaButton onClick={() => setAddPizza(addPizza + 1)}>Добавить {addPizza}</AddPizzaButton>
+            <AddPizzaButton onClick={() => setAddPizza(addPizza + 1)}>
+              Добавить {addPizza}
+            </AddPizzaButton>
           </StyledPriceBlock>
         </StyledPizzaBlock>
       ))}
@@ -80,6 +82,8 @@ const StyledPizzaBlock = styled.div`
 `;
 
 const PizzaName = styled.h3`
+  text-align: center;
+
   margin-bottom: 5px;
 `;
 
@@ -139,5 +143,9 @@ const StyledPriceBlock = styled.div`
 `;
 
 const AddPizzaButton = styled.button`
+  border: 3px solid #ff9800;
+  border-radius: 25px;
 
-`
+  margin-top: 5px;
+  padding: 10px;
+`;

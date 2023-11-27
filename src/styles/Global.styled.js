@@ -24,7 +24,7 @@ body {
   a{
     white-space: nowrap;
   }
-    background-color: white;
+    background: #eae2bf99;
     
     font-family:'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',

@@ -1,40 +1,41 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-export const Sort = () => {
-  const [sortType, setSortType] = useState("популярности");
+export const SortList = () => {
   const [activeSort, setActiveSort] = useState(0);
-  const [isListVisible, setListVisible] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const sortPopup = ["популярности", "цене", "алфавиту"];
+  const activeSortPopup = sortPopup[activeSort];
 
   const toggleListVisibility = () => {
-    setListVisible(!isListVisible);
+    setOpen(!open);
   };
 
   const handleClick = (item, index) => {
-    setSortType(item);
     setActiveSort(index);
+    setOpen(false);
   };
 
   return (
     <SortContainer>
       <div onClick={toggleListVisibility}>
         <b>Сортировка по: </b>
-        <SortActive>{sortType}</SortActive>
+        <SortActive>{activeSortPopup}</SortActive>
       </div>
       <div>
-        <SortList style={{ display: isListVisible ? "block" : "none" }}>
-          {sortPopup.map((item, i) => (
-            <List
-              className={activeSort === i ? "active" : ""}
-              key={i}
-              onClick={() => handleClick(item, i)}
-            >
-              {item}
-            </List>
-          ))}
-        </SortList>
+        {open && (
+          <SortListStyle>
+            {sortPopup.map((item, i) => (
+              <List
+                className={activeSort === i ? "active" : ""}
+                key={i}
+                onClick={() => handleClick(item, i)}
+              >
+                {item}
+              </List>
+            ))}
+          </SortListStyle>
+        )}
       </div>
     </SortContainer>
   );
@@ -44,7 +45,7 @@ const SortContainer = styled.div`
   /* Стили для контейнера сортировки */
 `;
 
-const SortList = styled.ul`
+const SortListStyle = styled.ul`
   position: absolute;
   background-color: #f0eeeec2;
 
@@ -54,8 +55,9 @@ const SortList = styled.ul`
 
 const List = styled.li`
   color: ${(props) => (props.className === "active" ? "#ff9800" : "black")};
-  background-color: ${(props) => (props.className === "active" ? "white" : "transparent")};
-  
+  background-color: ${(props) =>
+    props.className === "active" ? "white" : "transparent"};
+
   padding: 10px;
   border-radius: 15px;
 `;
@@ -67,4 +69,3 @@ const SortActive = styled.span`
   text-decoration-style: dashed;
 `;
 
-export default Sort;

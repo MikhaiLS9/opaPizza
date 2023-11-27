@@ -1,19 +1,14 @@
 import styled from "styled-components";
 import { useState } from "react";
-import { Sort } from "../../components/header/HeaderSprt";
+import { SortList } from "../../components/sort/SortList";
 
-export const HeaderSectionStyled = (props) => {
+export const SortSectionStyled = (props) => {
   const [activeLink, setActiveLink] = useState(0);
 
-  console.log(activeLink);
   return (
     <StyledNav>
       <StyledListHeader>
-        {props.list.map((item, index) => (
-          <li key={index + 1}>
-            <a href="#!">{item}</a>
-          </li>
-        ))}
+       
       </StyledListHeader>
       <div></div>
       <StyledPizzaList>
@@ -28,11 +23,11 @@ export const HeaderSectionStyled = (props) => {
             </StyledLinkPizza>
           </li>
         ))}
-        <Sort/>
-        <StyledCart>Корзина</StyledCart>
 
+        <SortList />
+
+    
       </StyledPizzaList>
-      
     </StyledNav>
   );
 };
@@ -65,11 +60,4 @@ const StyledLinkPizza = styled.a`
     props.className === "activePizzaList" ? "black" : "transparent"};
 `;
 
-const StyledCart = styled.button`
-  border: 5px solid #ff9800;
-  border-radius: 25px;
-  padding: 10px;
 
-  color: black;
-  font-weight: bold;
-`;

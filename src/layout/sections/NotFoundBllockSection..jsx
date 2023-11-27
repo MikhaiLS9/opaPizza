@@ -10,7 +10,7 @@ export const NotFoundBlockSection = (props) => {
         Вероятней всего, вы не заказывали ещё пиццу. Для того, чтобы заказать
         пиццу, перейди на главную страницу.
       </p>
-      <Link href="/">Вернуться назад</Link>
+      <Link href="/opaPizza">Вернуться назад</Link>
     </StyledNotFoundBlockSection>
   );
 };

@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const NotFoundBlockSection = (props) => {
   return (
@@ -10,7 +11,7 @@ export const NotFoundBlockSection = (props) => {
         Вероятней всего, вы не заказывали ещё пиццу. Для того, чтобы заказать
         пиццу, перейди на главную страницу.
       </p>
-      <Link href="/opaPizza">Вернуться назад</Link>
+      <StyledLink to="/opaPizza">Вернуться назад</StyledLink>
     </StyledNotFoundBlockSection>
   );
 };
@@ -31,7 +32,7 @@ const Line = styled.hr`
   width: 100%;
 `;
 
-const Link = styled.a`
+const StyledLink = styled(Link)`
   background-color: black;
   color: white;
   border-radius: 15px;

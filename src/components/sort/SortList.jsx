@@ -1,26 +1,39 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  SetSortPopupCategory,
+  SetSortProperty,
+} from "../../redux/slices/filterSlice";
 
 export const SortList = () => {
   const [activeSort, setActiveSort] = useState(0);
   const [open, setOpen] = useState(false);
-  const sortPopup = ["популярности", "цене", "алфавиту"];
-  const activeSortPopup = sortPopup[activeSort];
+  const dispatch = useDispatch();
+  const sortPopup = [
+    { name: "популярности", sortProperty: "rating" },
+    { name: "цене", sortProperty: "price" },
+    { name: "алфавиту", sortProperty: "title" },
+  ];
+  // const activeSortPopup = sortPopup[activeSort];
+  const sortPopupCategory = useSelector((state) => state.filter.sort);
 
   const toggleListVisibility = () => {
     setOpen(!open);
   };
 
-  const handleClick = (item, index) => {
+  const handleClick = (name, property, index) => {
     setActiveSort(index);
     setOpen(false);
+    dispatch(SetSortPopupCategory(name));
+    dispatch(SetSortProperty(property));
   };
 
   return (
     <SortContainer>
       <div onClick={toggleListVisibility}>
         <b>Сортировка по: </b>
-        <SortActive>{activeSortPopup}</SortActive>
+        <SortActive>{sortPopupCategory.name}</SortActive>
       </div>
       <div>
         {open && (
@@ -29,9 +42,9 @@ export const SortList = () => {
               <List
                 className={activeSort === i ? "active" : ""}
                 key={i}
-                onClick={() => handleClick(item, i)}
+                onClick={() => handleClick(item.name, item.sortProperty, i)}
               >
-                {item}
+                {item.name}
               </List>
             ))}
           </SortListStyle>
@@ -68,4 +81,3 @@ const SortActive = styled.span`
   text-decoration-line: underline;
   text-decoration-style: dashed;
 `;
-

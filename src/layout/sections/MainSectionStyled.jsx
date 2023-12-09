@@ -1,14 +1,25 @@
 import styled from "styled-components";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+
 export const MainSectionStyled = (props) => {
   const [activeTypes, setActiveTypes] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
   const [addPizza, setAddPizza] = useState(0);
+  const selectedActivePizzaList = useSelector(
+    (state) => state.filter.categoryId
+  );
+  const selected = useSelector((state) => state.filter.sort.sortProperty);
+
+  const filteredPizzas = props.pizzas
+    .filter((pizza) => pizza.sort.includes(selectedActivePizzaList))
+    .sort((a, b) => b[selected] - a[selected]);
 
   const pizzaTypes = ["традиционное", "тонкое"];
+
   return (
     <StyledSectionBlock>
-      {props.pizzas.map((pizza) => (
+      {filteredPizzas.map((pizza) => (
         <StyledPizzaBlock key={pizza.id}>
           <StyledImg src={pizza.imageUrl} alt="Pizza" />
           <PizzaName>{pizza.title}</PizzaName>

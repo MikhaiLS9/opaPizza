@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import { SortList } from "../../components/sort/SortList";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setCategoryId } from "../../redux/slices/filterSlice";
 
 export const SortSectionStyled = (props) => {
@@ -12,8 +12,9 @@ export const SortSectionStyled = (props) => {
 
   const handleCategoryClick = (index) => {
     setActiveLink(index);
-    const category = props.pizzaList[index];
-    dispatch(setCategoryId(category));
+    const categoryPizzaList = props.pizzaList[index];
+
+    dispatch(setCategoryId(categoryPizzaList));
   };
 
   return (

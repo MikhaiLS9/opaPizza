@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -10,6 +10,7 @@ export const SortList = () => {
   const [activeSort, setActiveSort] = useState(0);
   const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
+
   const sortPopup = [
     { name: "популярности", sortProperty: "rating" },
     { name: "цене", sortProperty: "price" },
@@ -18,9 +19,9 @@ export const SortList = () => {
   // const activeSortPopup = sortPopup[activeSort];
   const sortPopupCategory = useSelector((state) => state.filter.sort);
 
-  const toggleListVisibility = () => {
-    setOpen(!open);
-  };
+  const toggleListVisibility = useCallback(() => {
+    setOpen((open) => !open);
+  }, []);
 
   const handleClick = (name, property, index) => {
     setActiveSort(index);
@@ -29,8 +30,16 @@ export const SortList = () => {
     dispatch(SetSortProperty(property));
   };
 
+  useEffect(() => {
+    const windowPopup = document.querySelector(".popup");
+
+    document.body.addEventListener("click", (event) => {
+      if (!windowPopup.contains(event.target)) setOpen(false);
+    });
+  }, []);
+
   return (
-    <SortContainer>
+    <SortContainer className="popup">
       <div onClick={toggleListVisibility}>
         <b>Сортировка по: </b>
         <SortActive>{sortPopupCategory.name}</SortActive>

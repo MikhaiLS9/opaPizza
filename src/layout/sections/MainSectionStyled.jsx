@@ -13,7 +13,15 @@ export const MainSectionStyled = (props) => {
 
   const filteredPizzas = props.pizzas
     .filter((pizza) => pizza.sort.includes(selectedActivePizzaList))
-    .sort((a, b) => b[selected] - a[selected]);
+    .sort((a, b) => {
+      if (a[selected] > b[selected]) {
+        return -1;
+      }
+      if (a[selected] < b[selected]) {
+        return 1;
+      }
+      return 0;
+    });
 
   const pizzaTypes = ["традиционное", "тонкое"];
 

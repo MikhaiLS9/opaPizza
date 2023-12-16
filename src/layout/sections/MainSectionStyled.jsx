@@ -1,11 +1,21 @@
 import styled from "styled-components";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setSelectSize,
+  setAddPizzas,
+  setSelectTypes,
+} from "../../redux/slices/cartSlice";
 
 export const MainSectionStyled = (props) => {
   const [activeTypes, setActiveTypes] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
   const [addPizza, setAddPizza] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const pizzaTypes = ["традиционное", "тонкое"];
+
   const selectedActivePizzaList = useSelector(
     (state) => state.filter.categoryId
   );
@@ -23,11 +33,25 @@ export const MainSectionStyled = (props) => {
       return 0;
     });
 
-  const pizzaTypes = ["традиционное", "тонкое"];
+  const addCart = (e, i, type) => {
+    const pizzaSizeKey = Object.values(activeSizes);
+    const pizzaTypesKey = Object.values(activeTypes);
+    const pizzaItem = {
+      id: type[i].id,
+      title: type[i].title,
+      imageUrl: type[i].imageUrl,
+      sizes: type[i].sizes[pizzaSizeKey],
+      types: type[i].types[pizzaTypesKey],
+      price: type[i].price,
+    };
+    dispatch(setSelectSize(activeSizes));
+    dispatch(setSelectTypes(activeTypes));
+    dispatch(setAddPizzas(pizzaItem));
+  };
 
   return (
     <StyledSectionBlock>
-      {filteredPizzas.map((pizza) => (
+      {filteredPizzas.map((pizza, index, type) => (
         <StyledPizzaBlock key={pizza.id}>
           <StyledImg src={pizza.imageUrl} alt="Pizza" />
           <PizzaName>{pizza.title}</PizzaName>
@@ -42,7 +66,6 @@ export const MainSectionStyled = (props) => {
                     }
                     onClick={() =>
                       setActiveTypes((prevState) => ({
-                        ...prevState,
                         [pizza.id]: types,
                       }))
                     }
@@ -63,7 +86,6 @@ export const MainSectionStyled = (props) => {
                     className={activeSizes[pizza.id] === i ? "activeSize" : ""}
                     onClick={() =>
                       setActiveSizes((prevState) => ({
-                        ...prevState,
                         [pizza.id]: i,
                       }))
                     }
@@ -76,7 +98,7 @@ export const MainSectionStyled = (props) => {
           </StyledPizzaSelection>
           <StyledPriceBlock>
             <p>от {pizza.price} &#8381;</p>
-            <AddPizzaButton onClick={() => setAddPizza(addPizza + 1)}>
+            <AddPizzaButton onClick={(e) => addCart(e, index, type)}>
               Добавить {addPizza}
             </AddPizzaButton>
           </StyledPriceBlock>

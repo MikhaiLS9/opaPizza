@@ -1,10 +1,10 @@
-import { Container } from "../../styles/Container";
-import { NotFoundBlockSection } from "../../layout/sections/NotFoundBllockSection.";
+// import { Container } from "../../styles/Container";
+// import { NotFoundBlockSection } from "../../layout/sections/cart/CartSection.";
 
-export const NotFoundBlock = () => {
-  return (
-    <Container>
-      <NotFoundBlockSection />
-    </Container>
-  );
-};
+// export const NotFoundBlock = () => {
+//   return (
+//     <Container>
+//       <NotFoundBlockSection />
+//     </Container>
+//   );
+// };

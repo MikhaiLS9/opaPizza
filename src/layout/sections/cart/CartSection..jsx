@@ -6,9 +6,33 @@ import { useSelector } from "react-redux";
 export const Goods = () => {
   const pizzaTypes = ["традиционное", "тонкое"];
   const pizzaCart = useSelector((state) => state.cart.pizza);
-  console.log(pizzaCart.map((item) => item.price));
-  const goodsSum = pizzaCart.reduce((acc, item) => acc + item.price, 0);
-  console.log(goodsSum);
+
+  const countedArr = pizzaCart.reduce((acc, curr) => {
+    const samePizzaItem = acc.find(
+      (item) =>
+        item.id === curr.id &&
+        item.title === curr.title &&
+        item.imageUrl === curr.imageUrl &&
+        item.sizes === curr.sizes &&
+        item.types === curr.types
+    );
+
+    if (samePizzaItem) {
+      samePizzaItem.count += 1;
+    } else {
+      const count = {
+        ...curr,
+        count: 1,
+      };
+      acc.push(count);
+    }
+
+    return acc;
+  }, []);
+
+  const goodsSum = countedArr.reduce((acc, item) => acc + item.price, 0);
+
+  console.log(countedArr);
 
   return (
     <StyledGoodsSection>
@@ -26,8 +50,8 @@ export const Goods = () => {
       ) : (
         <>
           <StyledGoods>
-            {pizzaCart.map((item) => (
-              <StyledGoodItem key={item.id}>
+            {countedArr.map((item, index) => (
+              <StyledGoodItem key={item.id + index}>
                 <StyledImg src={item.imageUrl} alt="pizza" />
                 <div>
                   <h3>{item.title}</h3>
@@ -35,7 +59,7 @@ export const Goods = () => {
                     {pizzaTypes[item.types]}, {item.sizes} см.
                   </span>
                 </div>
-
+                <span>{item.count} шт.</span>
                 <span>{item.price} &#8381;</span>
               </StyledGoodItem>
             ))}

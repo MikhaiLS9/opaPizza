@@ -10,7 +10,6 @@ import {
 export const MainSectionStyled = (props) => {
   const [activeTypes, setActiveTypes] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
-  const [addPizza, setAddPizza] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -99,7 +98,7 @@ export const MainSectionStyled = (props) => {
           <StyledPriceBlock>
             <p>от {pizza.price} &#8381;</p>
             <AddPizzaButton onClick={(e) => addCart(e, index, type)}>
-              Добавить {addPizza}
+              Добавить
             </AddPizzaButton>
           </StyledPriceBlock>
         </StyledPizzaBlock>

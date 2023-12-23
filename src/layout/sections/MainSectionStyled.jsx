@@ -5,6 +5,7 @@ import {
   setSelectSize,
   setAddPizzas,
   setSelectTypes,
+  setAddCount,
 } from "../../redux/slices/cartSlice";
 
 export const MainSectionStyled = (props) => {
@@ -46,6 +47,7 @@ export const MainSectionStyled = (props) => {
     dispatch(setSelectSize(activeSizes));
     dispatch(setSelectTypes(activeTypes));
     dispatch(setAddPizzas(pizzaItem));
+    dispatch(setAddCount(pizzaItem));
   };
 
   return (

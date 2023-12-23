@@ -4,6 +4,7 @@ const initialState = {
   sizes: {},
   types: {},
   pizza: [],
+  count: [],
 };
 
 export const cartSlice = createSlice({
@@ -19,6 +20,11 @@ export const cartSlice = createSlice({
 
     setAddPizzas: (state, actions) => {
       state.pizza = [...state.pizza, actions.payload];
+    },
+    setAddCount: (state, actions) => {
+      state.pizza = [...state.pizza, actions.payload];
+      const count = state.pizza;
+      console.log(count.map(item => item.id));
     },
   },
 });

@@ -1,39 +1,36 @@
-import React from "react";
+// import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setIncreaseCount,
+  setDecreaseCount,
+  setClearCount,
+} from "../../../redux/slices/cartSlice";
 
 export const Goods = () => {
+  const dispatch = useDispatch();
   const pizzaTypes = ["традиционное", "тонкое"];
   const pizzaCart = useSelector((state) => state.cart.pizza);
+  const countpizza = useSelector((state) => state.cart.count);
 
-  const countedArr = pizzaCart.reduce((acc, curr) => {
-    const samePizzaItem = acc.find(
-      (item) =>
-        item.id === curr.id &&
-        item.title === curr.title &&
-        item.imageUrl === curr.imageUrl &&
-        item.sizes === curr.sizes &&
-        item.types === curr.types
-    );
+  const incrementCounter = (pizzaId) => {
+    dispatch(setIncreaseCount(pizzaId));
+    console.log(pizzaId);
+  };
 
-    if (samePizzaItem) {
-      samePizzaItem.count += 1;
-    } else {
-      const count = {
-        ...curr,
-        count: 1,
-      };
-      acc.push(count);
-    }
+  const decrementtCounter = (pizzaId) => {
+    dispatch(setDecreaseCount(pizzaId));
+    console.log(pizzaId);
+  };
 
-    return acc;
-  }, []);
-
-  const goodsSum = countedArr.reduce((acc, item) => acc + item.price, 0);
-
-  console.log(countedArr);
-
+  const clearCount = (pizzaId) => {
+    dispatch(setClearCount(pizzaId));
+    console.log(pizzaId);
+  };
+console.log(countpizza);
+  const goodsSum = countpizza.reduce((acc, item) => acc += (item.count * item.price),0);
+console.log(goodsSum);
   return (
     <StyledGoodsSection>
       {pizzaCart.length === 0 ? (
@@ -50,7 +47,7 @@ export const Goods = () => {
       ) : (
         <>
           <StyledGoods>
-            {countedArr.map((item, index) => (
+            {countpizza.map((item, index) => (
               <StyledGoodItem key={item.id + index}>
                 <StyledImg src={item.imageUrl} alt="pizza" />
                 <div>
@@ -59,8 +56,21 @@ export const Goods = () => {
                     {pizzaTypes[item.types]}, {item.sizes} см.
                   </span>
                 </div>
+                <StyledVerificationButton
+                  onClick={() => decrementtCounter(item)}
+                >
+                  -
+                </StyledVerificationButton>
                 <span>{item.count} шт.</span>
-                <span>{item.price} &#8381;</span>
+                <StyledVerificationButton
+                  onClick={() => incrementCounter(item)}
+                >
+                  +
+                </StyledVerificationButton>
+                <span>{item.price * item.count} &#8381;</span>
+                <StyledVerificationButton onClick={() => clearCount(item)}>
+                  #
+                </StyledVerificationButton>
               </StyledGoodItem>
             ))}
           </StyledGoods>
@@ -117,4 +127,9 @@ const StyledGoodItem = styled.div`
   align-items: center;
   align-content: center;
   justify-content: center;
+`;
+
+const StyledVerificationButton = styled.button`
+  background-color: #ff9800;
+  padding: 10px;
 `;

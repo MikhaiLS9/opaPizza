@@ -5,12 +5,13 @@ import {
   setSelectSize,
   setAddPizzas,
   setSelectTypes,
-  setAddCount,
+  setIncreaseCount,
 } from "../../redux/slices/cartSlice";
 
 export const MainSectionStyled = (props) => {
   const [activeTypes, setActiveTypes] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
+
 
   const dispatch = useDispatch();
 
@@ -43,11 +44,14 @@ export const MainSectionStyled = (props) => {
       sizes: type[i].sizes[pizzaSizeKey],
       types: type[i].types[pizzaTypesKey],
       price: type[i].price,
+      
     };
     dispatch(setSelectSize(activeSizes));
     dispatch(setSelectTypes(activeTypes));
     dispatch(setAddPizzas(pizzaItem));
-    dispatch(setAddCount(pizzaItem));
+    dispatch(setIncreaseCount(pizzaItem));
+    console.log(pizzaItem.types)
+    console.log(pizzaTypesKey)
   };
 
   return (
@@ -67,6 +71,7 @@ export const MainSectionStyled = (props) => {
                     }
                     onClick={() =>
                       setActiveTypes((prevState) => ({
+                        
                         [pizza.id]: types,
                       }))
                     }
@@ -87,6 +92,7 @@ export const MainSectionStyled = (props) => {
                     className={activeSizes[pizza.id] === i ? "activeSize" : ""}
                     onClick={() =>
                       setActiveSizes((prevState) => ({
+                        
                         [pizza.id]: i,
                       }))
                     }

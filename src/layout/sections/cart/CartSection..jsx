@@ -10,7 +10,6 @@ import {
 
 export const Goods = () => {
   const dispatch = useDispatch();
-  const pizzaTypes = ["традиционное", "тонкое"];
   const pizzaCart = useSelector((state) => state.cart.pizza);
   const countpizza = useSelector((state) => state.cart.count);
 
@@ -53,7 +52,7 @@ console.log(goodsSum);
                 <div>
                   <h3>{item.title}</h3>
                   <span>
-                    {pizzaTypes[item.types]}, {item.sizes} см.
+                    {item.types}, {item.sizes} см.
                   </span>
                 </div>
                 <StyledVerificationButton

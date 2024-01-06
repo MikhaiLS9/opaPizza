@@ -12,7 +12,6 @@ export const MainSectionStyled = (props) => {
   const [activeTypes, setActiveTypes] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
 
-
   const dispatch = useDispatch();
 
   const pizzaTypes = ["традиционное", "тонкое"];
@@ -42,16 +41,13 @@ export const MainSectionStyled = (props) => {
       title: type[i].title,
       imageUrl: type[i].imageUrl,
       sizes: type[i].sizes[pizzaSizeKey],
-      types: type[i].types[pizzaTypesKey],
+      types: pizzaTypes[pizzaTypesKey],
       price: type[i].price,
-      
     };
     dispatch(setSelectSize(activeSizes));
     dispatch(setSelectTypes(activeTypes));
     dispatch(setAddPizzas(pizzaItem));
     dispatch(setIncreaseCount(pizzaItem));
-    console.log(pizzaItem.types)
-    console.log(pizzaTypesKey)
   };
 
   return (
@@ -71,7 +67,6 @@ export const MainSectionStyled = (props) => {
                     }
                     onClick={() =>
                       setActiveTypes((prevState) => ({
-                        
                         [pizza.id]: types,
                       }))
                     }
@@ -92,7 +87,6 @@ export const MainSectionStyled = (props) => {
                     className={activeSizes[pizza.id] === i ? "activeSize" : ""}
                     onClick={() =>
                       setActiveSizes((prevState) => ({
-                        
                         [pizza.id]: i,
                       }))
                     }

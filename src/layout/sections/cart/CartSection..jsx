@@ -2,37 +2,48 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setIncreaseCount,
-  setDecreaseCount,
-  setClearCount,
-} from "../../../redux/slices/cartSlice";
+import iconMinus from "../../../ImgPizza/free-icon-font-minus-small-3917160.png";
+import iconPlus from "../../../ImgPizza/free-icon-font-plus-small-3917179.png";
+import iconBasket from "../../../ImgPizza/free-icon-font-trash-3917378.png";
+import iconCoins from "../../../ImgPizza/free-icon-font-coins-7928197.png";
+import iconCart from "../../../ImgPizza/free-icon-font-shopping-cart-3916630.png";
 
+import {
+  setIncreasePizza,
+  setDecreasePizza,
+  setClearItemPizza,
+  setClearCart,
+} from "../../../redux/slices/cartSlice";
 export const Goods = () => {
   const dispatch = useDispatch();
-  const pizzaCart = useSelector((state) => state.cart.pizza);
-  const countpizza = useSelector((state) => state.cart.count);
+  const setPizza = useSelector((state) => state.cart.pizza);
+  console.log(setPizza);
+
+  const goodsSum = setPizza.reduce(
+    (acc, item) => (acc += item.count * item.price),
+    0
+  );
 
   const incrementCounter = (pizzaId) => {
-    dispatch(setIncreaseCount(pizzaId));
     console.log(pizzaId);
+    dispatch(setIncreasePizza(pizzaId));
   };
 
   const decrementtCounter = (pizzaId) => {
-    dispatch(setDecreaseCount(pizzaId));
-    console.log(pizzaId);
+    dispatch(setDecreasePizza(pizzaId));
   };
 
-  const clearCount = (pizzaId) => {
-    dispatch(setClearCount(pizzaId));
-    console.log(pizzaId);
+  const ClearItemPizza = (pizzaId) => {
+    dispatch(setClearItemPizza(pizzaId));
   };
-console.log(countpizza);
-  const goodsSum = countpizza.reduce((acc, item) => acc += (item.count * item.price),0);
-console.log(goodsSum);
+
+  const clearCount = () => {
+    dispatch(setClearCart());
+  };
+
   return (
     <StyledGoodsSection>
-      {pizzaCart.length === 0 ? (
+      {setPizza.length === 0 ? (
         <>
           <header>OPA PIZZA</header>
           <Line />
@@ -46,35 +57,46 @@ console.log(goodsSum);
       ) : (
         <>
           <StyledGoods>
-            {countpizza.map((item, index) => (
+            <button onClick={clearCount}>
+              <StyledTextSpan>
+                Очистить корзину
+                <img src={iconCart} alt="" />
+              </StyledTextSpan>
+            </button>
+            {setPizza.map((item, index) => (
               <StyledGoodItem key={item.id + index}>
                 <StyledImg src={item.imageUrl} alt="pizza" />
                 <div>
                   <h3>{item.title}</h3>
-                  <span>
+                  <StyledTextSpan>
                     {item.types}, {item.sizes} см.
-                  </span>
+                  </StyledTextSpan>
                 </div>
                 <StyledVerificationButton
                   onClick={() => decrementtCounter(item)}
                 >
-                  -
+                  <img src={iconMinus} alt="Minus" />
                 </StyledVerificationButton>
-                <span>{item.count} шт.</span>
+                <StyledTextSpan>{item.count} шт.</StyledTextSpan>
                 <StyledVerificationButton
                   onClick={() => incrementCounter(item)}
                 >
-                  +
+                  <img src={iconPlus} alt="Plus" />
                 </StyledVerificationButton>
-                <span>{item.price * item.count} &#8381;</span>
-                <StyledVerificationButton onClick={() => clearCount(item)}>
-                  #
+                <StyledTextSpan>
+                  {item.price * item.count} &#8381;
+                </StyledTextSpan>
+                <StyledVerificationButton onClick={() => ClearItemPizza(item)}>
+                  <img src={iconBasket} alt="Basket" />
                 </StyledVerificationButton>
               </StyledGoodItem>
             ))}
           </StyledGoods>
           <div>
-            <h3>Сумма заказа : {goodsSum}</h3>
+            <StyledTextSpan>
+              Сумма заказа : {goodsSum}
+              <img src={iconCoins} alt="Coins" />
+            </StyledTextSpan>
           </div>
           <StyledLink to="/opaPizza">Вернуться назад</StyledLink>
         </>
@@ -126,9 +148,22 @@ const StyledGoodItem = styled.div`
   align-items: center;
   align-content: center;
   justify-content: center;
+
+  border: 1px solid red;
+  border-radius: 25px;
+  padding: 10px;
 `;
 
 const StyledVerificationButton = styled.button`
-  background-color: #ff9800;
-  padding: 10px;
+  padding: 12px;
+`;
+
+const StyledTextSpan = styled.span`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px;
 `;

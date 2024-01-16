@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
 
 img {
   object-fit: cover;
+  mix-blend-mode: multiply;
 }
 
 body {

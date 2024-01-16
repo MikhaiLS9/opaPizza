@@ -1,16 +1,15 @@
 import styled from "styled-components";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setSelectSize,
-  setAddPizzas,
-  setSelectTypes,
-  setIncreaseCount,
-} from "../../redux/slices/cartSlice";
+import iconCloseModal from "../../ImgPizza/free-icon-font-cross-3917759.png";
+
+import { setIncreasePizza } from "../../redux/slices/cartSlice";
 
 export const MainSectionStyled = (props) => {
   const [activeTypes, setActiveTypes] = useState([]);
   const [activeSizes, setActiveSizes] = useState([]);
+
+  const [showModal, setShowModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -36,22 +35,41 @@ export const MainSectionStyled = (props) => {
   const addCart = (e, i, type) => {
     const pizzaSizeKey = Object.values(activeSizes);
     const pizzaTypesKey = Object.values(activeTypes);
-    const pizzaItem = {
-      id: type[i].id,
-      title: type[i].title,
-      imageUrl: type[i].imageUrl,
-      sizes: type[i].sizes[pizzaSizeKey],
-      types: pizzaTypes[pizzaTypesKey],
-      price: type[i].price,
-    };
-    dispatch(setSelectSize(activeSizes));
-    dispatch(setSelectTypes(activeTypes));
-    dispatch(setAddPizzas(pizzaItem));
-    dispatch(setIncreaseCount(pizzaItem));
+
+    if (
+      type[i].id !== +Object.keys(activeSizes) ||
+      type[i].id !== +Object.keys(activeTypes)
+    )
+      setShowModal(true);
+    else {
+      const pizzaItem = {
+        id: type[i].id,
+        title: type[i].title,
+        imageUrl: type[i].imageUrl,
+        sizes: type[i].sizes[pizzaSizeKey],
+        types: pizzaTypes[pizzaTypesKey],
+        price: type[i].price,
+      };
+
+      dispatch(setIncreasePizza(pizzaItem));
+    }
+  };
+  const сloseModal = () => {
+    setShowModal(false);
   };
 
   return (
     <StyledSectionBlock>
+      {showModal && (
+        <ErrorModal>
+          <StyledErrorModal>
+            <h3>Вы не выбрали размер или тип пиццы</h3>
+            <button onClick={сloseModal}>
+              <img src={iconCloseModal} alt="CloseModal" />
+            </button>
+          </StyledErrorModal>
+        </ErrorModal>
+      )}
       {filteredPizzas.map((pizza, index, type) => (
         <StyledPizzaBlock key={pizza.id}>
           <StyledImg src={pizza.imageUrl} alt="Pizza" />
@@ -66,7 +84,7 @@ export const MainSectionStyled = (props) => {
                       activeTypes[pizza.id] === types ? "activeType" : ""
                     }
                     onClick={() =>
-                      setActiveTypes((prevState) => ({
+                      setActiveTypes(() => ({
                         [pizza.id]: types,
                       }))
                     }
@@ -86,7 +104,7 @@ export const MainSectionStyled = (props) => {
                     htmlFor={`${size}-${pizza.id}`}
                     className={activeSizes[pizza.id] === i ? "activeSize" : ""}
                     onClick={() =>
-                      setActiveSizes((prevState) => ({
+                      setActiveSizes(() => ({
                         [pizza.id]: i,
                       }))
                     }
@@ -190,4 +208,24 @@ const AddPizzaButton = styled.button`
 
   margin-top: 5px;
   padding: 10px;
+`;
+
+const ErrorModal = styled.div`
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border: 2px solid black;
+  color: black;
+  padding: 20px;
+  border-radius: 4px;
+  z-index: 9999;
+`;
+
+const StyledErrorModal = styled.div`
+  display: flex;
+  font-size: 40px;
+  align-items: center;
+  gap : 30px;
 `;

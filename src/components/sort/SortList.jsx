@@ -70,6 +70,7 @@ const SortContainer = styled.div`
 const SortListStyle = styled.ul`
   position: absolute;
   background-color: #f0eeeec2;
+  z-index: 99999;
 
   padding: 10px;
   margin-top: 10px;

@@ -48,6 +48,14 @@ const StyledHeaderNav = styled.div`
   padding: 10px;
 
   background-color: #746a6a2e;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: 15px;
+    gap: 20px;
+    padding: 5px;
+  }
 `;
 
 const StyledCart = styled(Link)`

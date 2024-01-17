@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import iconCloseModal from "../../ImgPizza/free-icon-font-cross-3917759.png";
+import { theme } from "../../styles/theme";
 
 import { setIncreasePizza } from "../../redux/slices/cartSlice";
 
@@ -168,7 +169,9 @@ const StyledPizzaTypesBlock = styled.div`
 
 const StyledPizzaTypeLabel = styled.label`
   background-color: ${(props) =>
-    props.className === "activeType" ? "white" : "transparent"};
+    props.className === "activeType"
+      ? `${theme.accentColor}`
+      : `${theme.secondColor}`};
   border-radius: 10px;
   font-weight: bold;
   padding: 10px;
@@ -183,7 +186,9 @@ const StyledPizzaSizeBlock = styled.div`
 
 const StyledPizzaSizeLabel = styled.label`
   background-color: ${(props) =>
-    props.className === "activeSize" ? "white" : "transparent"};
+    props.className === "activeSize"
+      ? `${theme.accentColor}`
+      : `${theme.secondColor}`};
   border-radius: 10px;
   font-weight: bold;
   padding: 10px;
@@ -203,8 +208,10 @@ const StyledPriceBlock = styled.div`
 `;
 
 const AddPizzaButton = styled.button`
-  border: 3px solid #ff9800;
+  border: 3px solid ${theme.accentColor};
   border-radius: 25px;
+  background-color: ${(props) =>
+    props.className === "activeSize" ? `${theme.secondColor}` : "transparent"};
 
   margin-top: 5px;
   padding: 10px;
@@ -227,5 +234,5 @@ const StyledErrorModal = styled.div`
   display: flex;
   font-size: 40px;
   align-items: center;
-  gap : 30px;
+  gap: 30px;
 `;

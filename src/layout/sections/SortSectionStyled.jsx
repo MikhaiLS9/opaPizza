@@ -4,6 +4,7 @@ import { SortList } from "../../components/sort/SortList";
 
 import { useDispatch } from "react-redux";
 import { setCategoryId } from "../../redux/slices/filterSlice";
+import { theme } from "../../styles/theme";
 
 export const SortSectionStyled = (props) => {
   const [activeLink, setActiveLink] = useState(0);
@@ -42,6 +43,8 @@ const StyledNav = styled.nav`
   display: flex;
   flex-direction: column;
   margin: 10px;
+
+  
 `;
 
 const StyledPizzaList = styled.ul`
@@ -52,6 +55,18 @@ const StyledPizzaList = styled.ul`
 
   width: 100%;
   height: 100px;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    flex-wrap: wrap;
+    font-size: 15px;
+    gap: 20px;
+    padding: 5px;
+
+    
+    width: 291px;
+    height: 500px;
+  }
 `;
 
 const StyledPizzaListElements = styled.li`
@@ -69,7 +84,7 @@ const StyledLinkPizza = styled.a`
   min-width: 138px;
 
   color: ${(props) =>
-    props.className === "activePizzaList" ? "white" : "black"};
+    props.className === "activePizzaList" ? theme.secondColor : theme.thirdColor};
   background-color: ${(props) =>
-    props.className === "activePizzaList" ? "black" : "transparent"};
+    props.className === "activePizzaList" ? theme.thirdColor : "transparent"};
 `;

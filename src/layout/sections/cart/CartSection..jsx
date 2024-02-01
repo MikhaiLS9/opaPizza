@@ -1,4 +1,3 @@
-// import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,7 +13,7 @@ import {
   setClearItemPizza,
   setClearCart,
 } from "../../../redux/slices/cartSlice";
-import { Header } from "../../../components/header/Header";
+
 export const Goods = () => {
   const dispatch = useDispatch();
   const setPizza = useSelector((state) => state.cart.pizza);
@@ -59,12 +58,12 @@ export const Goods = () => {
       ) : (
         <>
           <StyledGoods>
-            <button onClick={clearCount}>
+            <StyledClearCartButton onClick={clearCount}>
               <StyledTextSpan>
                 Очистить корзину
                 <img src={iconCart} alt="" />
               </StyledTextSpan>
-            </button>
+            </StyledClearCartButton>
             {setPizza.map((item, index) => (
               <StyledGoodItem key={item.id + index}>
                 <StyledImg src={item.imageUrl} alt="pizza" />
@@ -161,6 +160,12 @@ const StyledGoodItem = styled.div`
     min-width: 300px;
     width: 100%;
   }
+`;
+
+const StyledClearCartButton = styled.button`
+  border: 1px solid black;
+  border-radius: 25px;
+  margin: 15px;
 `;
 
 const StyledVerificationButton = styled.button`

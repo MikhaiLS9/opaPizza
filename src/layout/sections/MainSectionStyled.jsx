@@ -210,11 +210,16 @@ const StyledPriceBlock = styled.div`
 const AddPizzaButton = styled.button`
   border: 3px solid ${theme.accentColor};
   border-radius: 25px;
-  background-color: ${(props) =>
-    props.className === "activeSize" ? `${theme.secondColor}` : "transparent"};
-
   margin-top: 5px;
   padding: 10px;
+
+  &:hover {
+    background-color: ${theme.secondColor};
+  }
+
+  &:active {
+    background-color: ${theme.accentColor};
+  }
 `;
 
 const ErrorModal = styled.div`

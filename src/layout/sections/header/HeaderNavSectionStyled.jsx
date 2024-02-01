@@ -55,6 +55,7 @@ const StyledHeaderNav = styled.div`
     font-size: 15px;
     gap: 20px;
     padding: 5px;
+    width: 100%;
   }
 `;
 

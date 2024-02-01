@@ -14,6 +14,7 @@ import {
   setClearItemPizza,
   setClearCart,
 } from "../../../redux/slices/cartSlice";
+import { Header } from "../../../components/header/Header";
 export const Goods = () => {
   const dispatch = useDispatch();
   const setPizza = useSelector((state) => state.cart.pizza);
@@ -43,6 +44,7 @@ export const Goods = () => {
 
   return (
     <StyledGoodsSection>
+      {/* <Header /> */}
       {setPizza.length === 0 ? (
         <>
           <header>OPA PIZZA</header>
@@ -112,7 +114,7 @@ const StyledGoodsSection = styled.section`
   align-items: center;
   justify-content: center;
 
-  height: 100vh;
+  height: 100%;
 `;
 
 const Line = styled.hr`
@@ -152,6 +154,13 @@ const StyledGoodItem = styled.div`
   border: 1px solid red;
   border-radius: 25px;
   padding: 10px;
+
+  @media (max-width: 850px) {
+    flex-direction: column;
+    flex-wrap: wrap;
+    min-width: 300px;
+    width: 100%;
+  }
 `;
 
 const StyledVerificationButton = styled.button`

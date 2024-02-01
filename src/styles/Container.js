@@ -8,5 +8,10 @@ margin: 0 auto;
 height: 100%;
 
 @media (max-width: 726px) {
+    display: flex;
+    padding: 15px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     padding: 15px;
 `;

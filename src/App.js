@@ -24,20 +24,11 @@ function App() {
           path="/cart"
           element={
             <React.Fragment>
-              <Header />
+              {/* <Header /> */}
               <Cart />
             </React.Fragment>
           }
         />
-        {/* <Route
-          path="*"
-          element={
-            <React.Fragment>
-              <Header />
-              <NotFoundBlock />
-            </React.Fragment>
-          }
-        /> */}
       </Routes>
     </Container>
   );
